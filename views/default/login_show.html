@@ -1,0 +1,91 @@
+{{extend 'layout.html'}}
+<style>
+
+/* Table style */
+table, th, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+table#t01 {
+    width: 80%;
+    border-spacing: 8px;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+    background-color: #fff;
+}
+table#t00 {
+    width: 80%;
+    border-spacing: 8px;
+}
+table#t00 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t00 tr:nth-child(odd) {
+    background-color: #fff;
+}
+</style>
+<button onclick="goBack()">Back to Home</button><br>
+
+<h1 style="text-align:left"><b>Test Device Connectivity</b></h1><br><br>
+
+    {{=credentials}}
+
+<br><br>
+
+{{if finished:}}
+<h1><b>Results</b></h1>
+
+    {{if all_devices:}}
+        <table id='t00'>
+        {{for oneRow in device_info_list:}}
+                <tr>
+                {{for k, v in oneRow.iteritems():}}
+                <th>{{=k}}</th>
+                <td>{{=v}}</td>
+                {{pass}}
+            </tr>
+        {{pass}}
+
+        </table>
+    <br>
+    <button id="show" type="button" onclick="toggleOutput()">Toggle Output</button><br>
+    <div id="full">
+        <pre>{{=output}}</pre>
+    </div>
+    {{else:}}
+<table id='t01'>
+    {{for key in router_info.keys():}}
+    <tr>
+        <th>{{=key}}:</th><td>{{=router_info[key]}}</td>
+    </tr>
+    {{pass}}
+</table>
+
+<p>
+<br>
+    <button id="show" type="button" onclick="toggleOutput()">Toggle Output</button><br>
+    <div id="full">
+        <pre>{{=output}}</pre>
+    </div>
+</p>
+    {{pass}}
+{{pass}}
+
+<script>
+    window.onload = function onLoad() {
+        document.getElementById("full").style.visibility = "hidden";
+    }
+    function goBack() {
+        window.location = "https://127.0.0.1:8000/"
+    }
+    function toggleOutput() {
+        if(document.getElementById("full").style.visibility == "hidden") document.getElementById("full").style.visibility = "visible";
+        else document.getElementById("full").style.visibility = "hidden";
+    }
+</script>

@@ -1,0 +1,156 @@
+{{extend 'layout.html'}}
+<html>
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    ul.tab {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Float the list items side by side */
+    ul.tab li {
+        float: left;
+    }
+
+    /* Style the links inside the list items */
+    ul.tab li a {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of links on hover */
+    ul.tab li a:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    ul.tab li a:focus, .active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 6px;
+        @-webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+    }
+
+
+    @-webkit-keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    @keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    /* Table style */
+    table, th, td {
+        border: 1px solid white;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+    }
+    table#t01 {
+        width: 80%;
+        border-spacing: 8px;
+    }
+    table#t01 tr:nth-child(even) {
+        background-color: #eee;
+    }
+    table#t01 tr:nth-child(odd) {
+        background-color: #fff;
+    }
+    table {
+        page-break-inside:auto;
+    }
+   tr { page-break-inside:avoid;
+       page-break-after:auto;
+   }
+</style>
+<body onload="makeTableScroll()">
+<button onclick="goBack()">Back to Home</button>
+<h1>Manage Devices</h1><br>
+
+<ul class="tab">
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'Add')">Add a network device</a></li>
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'Delete')">Update/Delete a network device</a></li>
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'List')">List network devices</a></li>
+</ul>
+
+<div id="Add" class="tabcontent">
+  <h3>Add a network device</h3>
+    {{=add_device}}
+</div>
+
+<div id="Delete" class="tabcontent">
+    <h3>Update/Delete a network device</h3>
+    {{=choose_device}}
+</div>
+
+
+<div id="List" class="tabcontent">
+    <br><br>
+    <div class="scrollingTable ">
+        <table id='t01'>
+        <tr>
+            <th>ID</th>
+            <th>IP address</th>
+            <th>Hostname</th>
+            <th>Operating System</th>
+            <th>Vendor</th>
+        </tr>
+
+        {{for oneRow in dev:}}
+        <tr>
+            <td>{{=oneRow['id']}}</td>
+            <td>{{=oneRow['ip']}}</td>
+            <td>{{=oneRow['hostname']}}</td>
+            <td>{{=oneRow['operating_system']}}</td>
+            <td>{{=oneRow['vendor']}}</td>
+        {{pass}}
+        </tr>
+    </table>
+    </div>
+    
+</div>
+
+<script>
+    function openTab(evt, option) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+            document.getElementById(option).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    function goBack() {
+        window.location = "https://127.0.0.1:8000/"
+    }
+    function editClicked(button_clicked) {
+        alert(button_clicked);
+    }
+</script>
+</body>
+</html>

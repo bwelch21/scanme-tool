@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+<html>
+    <button onclick="goBack()">Back to Home</button>
+    <body>
+        <h1><b>Password Update</b></h1><br>
+        {{=update}}<br><br>
+        <pre>{{=output}}</pre>
+    </body>
+</html>
+<script>
+    function goBack() {
+        window.location = "https://127.0.0.1:8000/"
+    }
+</script>
