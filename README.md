@@ -3,16 +3,22 @@ Scanme Tool Documentation
 Overview
 
 This site was built to be a portal for performing some basic management tasks for lab devices. Its current functions are: update, add, or delete a device from the site's database of network devices, retrieve diagnostics and statistics for specific devices, update user passwords for specific devices, and perform Nmap scans of devices or subnets. When a user visits the site, they will be presented with the four options, and will be redirected according to whichever one they choose. The current operating systems supported by this site are Junos OS, Cisco IOS, Cisco IOS XE, Cisco IOS XR, and Cisco NX.
+
 Manage Devices Function
+
 The Manage Devices page consists of three tabs: "Add a network device", "Update/Delete a network device", and "List network devices". The function of each is as their names suggest. The network devices are listed in the order in which they are added. Each device in the database is given an ID which acts as a way for the database to identify each record. This value is created by the database and cannot be edited by the user; however, it can be seen by the user since it is necessary for selecting a device to be edited or deleted. When a user chooses to add a network device, they are presented with a form in which they must input some basic information about the device they would like to add. After submitting this form, the newly added device can be found at the end of the list of network devices.
+
 This list of network devices must be updated as the devices that you want to be managed by this site changes and as specific device information changes (e.g. if the devices IP address changes, then the IP in the database will no longer be accurate unless it is manually changed). It is important to keep this list updated to ensure accurate information from certain functions. For example, it is possible to gain statistics on every device in the network devices database at one time. If a device changes IP address and the database isn't updated accordingly, the output given for specific IP address could be non-existent or, if the old IP address is now being used by another device, will be incorrect.
 
 Health Check
 The Health Check option provides a way to test a device's connectivity and gain valuable statistics about the device at the same time. When the page is visited, the user is presented with a form that takes the IP address of the device (if "All Devices" is not selected) and its operating system. If "All Devices" is selected, then every device in the site's network devices database will be checked and the input into the other fields is not used. When a "health check" is run, the web server attempts to connect to the specified IP via SSH. If a connection is successfully established, the show version command will be run on the device. The output will be parsed, and returned to the user in a readable format. The "All Devices" option will do this for every device in the database. This will, by nature, take a significant amount of time to complete.
 
 Password Updater
+
 The Password Updater option allows the easy management of user account passwords on any of the previously mentioned supported operating systems. This application requires that the user input the IP address of the device, the username of the account whose password will be changed, the new password, and the device's operating system. When executed, the web server will attempt to establish an SSH connection with the device, and the go on to update the password as specified.
+
 Nmap Scanning Application
+
 The application provides a user interface to the well-known, command-line troubleshooting tool Nmap. Within the Scanme Tool, the NSA provides another, more customizable way to test a device's connectivity than the Health Check option. The feedback of the two programs is also different.
 
 How to Admin the Scanme Tool
